@@ -1,0 +1,281 @@
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    /* OceanIQ brand */
+    --primary: 203 86% 44%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 199 80% 94%;
+    --secondary-foreground: 204 80% 24%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 191 94% 40%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 199 89% 48%;
+
+    --radius: 0.5rem;
+
+    /* Sidebar */
+    --sidebar-background: 210 40% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 203 86% 44%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 199 80% 94%;
+    --sidebar-accent-foreground: 204 80% 24%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 199 89% 48%;
+  }
+
+  .dark {
+    --background: 216 44% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 217 44% 10%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 217 44% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 203 86% 44%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 30% 18%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 30% 18%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 203 60% 24%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 32% 20%;
+    --input: 217 32% 20%;
+    --ring: 199 89% 48%;
+    --sidebar-background: 216 44% 8%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 203 86% 44%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 30% 18%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 216 32% 16%;
+    --sidebar-ring: 199 89% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Marquee animation for continuous left-to-right movement */
+  .marquee {
+    --marquee-duration: 28s;
+  }
+
+  .marquee .marquee-inner {
+    display: inline-flex;
+    gap: 0.5rem;
+    animation: marquee-ltr var(--marquee-duration) linear infinite;
+    will-change: transform;
+  }
+
+  .marquee:hover .marquee-inner,
+  .marquee-inner:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-ltr {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  /* KPI/box hover pop */
+  .kpi-card,
+  .marquee .radix-card {
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .kpi-card:hover,
+  .marquee .radix-card:hover,
+  .marquee .card:hover,
+  .marquee .m-2:hover {
+    transform: translateY(-8px) scale(1.04);
+    box-shadow: 0 12px 30px rgba(2, 6, 23, 0.35);
+  }
+
+  /* Smooth dark overlay controlled by --dark-opacity (0..1) */
+  .scroll-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(2, 6, 23, 0) 0%,
+      rgba(2, 6, 23, 0.85) 100%
+    );
+    opacity: calc(var(--page-dark, 0));
+    pointer-events: none;
+  }
+
+  /* Watercolor background for About page - uses --about-dark (0..1) */
+  .about-bg {
+    --about-start-opacity: calc(0.35 - var(--about-dark, 0) * 0.25);
+    --about-end-opacity: calc(0.05 + var(--about-dark, 0) * 0.9);
+    background-image:
+      radial-gradient(
+        1200px 600px at 10% 10%,
+        rgba(174, 227, 255, calc(var(--about-start-opacity))),
+        transparent 30%
+      ),
+      radial-gradient(
+        900px 400px at 80% 20%,
+        rgba(200, 240, 255, calc(var(--about-start-opacity) / 1.2)),
+        transparent 30%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(210, 235, 255, calc(var(--about-start-opacity))) 0%,
+        rgba(6, 50, 80, calc(var(--about-end-opacity))) 100%
+      );
+    background-blend-mode: overlay, overlay, normal;
+    transition: background 400ms linear;
+  }
+
+  /* Global page watercolor background - driven by --page-dark */
+  .page-bg {
+    --pd-start: calc(0.35 - var(--page-dark, 0) * 0.25);
+    --pd-end: calc(0.05 + var(--page-dark, 0) * 0.9);
+    background-image:
+      radial-gradient(
+        1200px 600px at 10% 10%,
+        rgba(174, 227, 255, calc(var(--pd-start))),
+        transparent 30%
+      ),
+      radial-gradient(
+        900px 400px at 80% 20%,
+        rgba(200, 240, 255, calc(var(--pd-start) / 1.2)),
+        transparent 30%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(210, 235, 255, calc(var(--pd-start))) 0%,
+        rgba(6, 50, 80, calc(var(--pd-end))) 100%
+      );
+    background-blend-mode: overlay, overlay, normal;
+    transition: background 400ms linear;
+  }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px) scale(0.995);
+    transition:
+      opacity 600ms cubic-bezier(0.2, 0.9, 0.2, 1),
+      transform 600ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Slide inner wrappers to add horizontal motion without conflicting transforms */
+  .slide-left-inner,
+  .slide-right-inner {
+    opacity: 0;
+    transition:
+      transform 680ms cubic-bezier(0.2, 0.9, 0.2, 1),
+      opacity 680ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+  .reveal.is-visible .slide-left-inner {
+    opacity: 1;
+    transform: translateX(0) !important;
+  }
+  .slide-left-inner {
+    transform: translateX(-18px);
+  }
+  .reveal.is-visible .slide-right-inner {
+    opacity: 1;
+    transform: translateX(0) !important;
+  }
+  .slide-right-inner {
+    transform: translateX(18px);
+  }
+
+  /* Team avatar */
+  .team-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.02)
+    );
+    color: hsl(var(--primary));
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 6px 18px rgba(2, 6, 23, 0.18);
+  }
+
+  .team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgba(2, 6, 23, 0.25);
+  }
+
+  /* subtle icon float */
+  .floaty {
+    animation: floaty 6s ease-in-out infinite;
+  }
+  @keyframes floaty {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+}

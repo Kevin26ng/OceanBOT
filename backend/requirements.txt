@@ -1,0 +1,17 @@
+fastapi[all]
+pandas
+pydantic
+Pillow
+transformers[torch]
+tensorflow
+torch
+torchvision
+tensorflow
+torch
+python-dotenv
+requests
+matplotlib
+scikit-learn
+uvicorn[standard]
+python-multipart
+google-generativeai
