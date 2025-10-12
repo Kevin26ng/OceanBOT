@@ -353,11 +353,3 @@ def get_columns(domain: str) -> List[str]:
     """Return column names for a dataset."""
     df = load_csv(domain)
     return list(df.columns)
-
-
-port = int(os.environ.get("PORT", 8000))
-
-if __name__ == "__main__":
-    import uvicorn
-    print(f"🚀 Starting server on port {port}")  # Debug line
-    uvicorn.run(app, host="0.0.0.0", port=port, reload=False)
