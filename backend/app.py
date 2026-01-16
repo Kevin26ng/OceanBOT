@@ -350,7 +350,6 @@ def get_dataset(
 
 @app.get("/columns/{domain}")
 def get_columns(domain: str) -> List[str]:
-    """Return column names for a dataset."""
     df = load_csv(domain)
     return list(df.columns)
 
